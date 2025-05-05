@@ -1,0 +1,80 @@
+﻿@page "/cart"
+@using MyOrderCart.BlazorUI.Services
+@using MyOrderCart.Application.Interfaces
+@inject CartService CartService
+@inject IOrderService OrderService
+
+<h3>Your Cart</h3>
+
+@if (!CartService.Items.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in CartService.Items)
+        {
+            <tr>
+                <td>@item.Product.Title</td>
+                <td>@item.Product.Price.ToString("C")</td>
+                <td>@item.Quantity</td>
+                <td>@item.TotalPrice.ToString("C")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h5>Total: @CartService.TotalPrice.ToString("C")</h5>
+
+    <button class="btn btn-success"
+            @onclick="ConfirmOrderAsync"
+            disabled="@IsConfirmDisabled"
+          >
+        @(isProcessing ? "Processing..." : "Confirm Order")
+    </button>
+
+    @if (CartService.IsConfirmed)
+    {
+        <p class="text-success mt-2">Order confirmed. ✅</p>
+    }
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="text-danger mt-2">@errorMessage</p>
+    }
+
+}
+
+@code {
+    private string? errorMessage;
+    private bool isProcessing = false;
+    private bool IsConfirmDisabled => CartService.IsConfirmed || isProcessing || !CartService.Items.Any();
+
+    private async Task ConfirmOrderAsync()
+    {
+        errorMessage = null;
+        isProcessing = true;
+        try
+        {
+            await OrderService.ConfirmOrderAsync(CartService.GetCart());
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+
+}

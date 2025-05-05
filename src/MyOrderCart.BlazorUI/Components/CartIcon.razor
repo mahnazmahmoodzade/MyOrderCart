@@ -1,8 +1,9 @@
 ﻿@using MyOrderCart.BlazorUI.Services
 @inject CartService CartService
+@inject NavigationManager NavManager
 @implements IDisposable
 
-<button class="btn btn-outline-primary position-relative">
+<button class="btn btn-outline-primary position-relative" @onclick="NavigateToCart">
     🛒 Cart
     @if (CartService.Items.Any())
     {
@@ -13,6 +14,11 @@
 </button>
 
 @code {
+
+    private void NavigateToCart()
+    {
+        NavManager.NavigateTo("/cart");
+    }
 
     protected override void OnInitialized()
     {

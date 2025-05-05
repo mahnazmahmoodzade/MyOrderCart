@@ -3,7 +3,7 @@ using MyOrderCart.Domain.Entities;
 
 namespace MyOrderCart.Application.Services;
 
-public class OrderService
+public class OrderService: IOrderService
 {
 	private readonly IExternalOrderSender _sender;
 

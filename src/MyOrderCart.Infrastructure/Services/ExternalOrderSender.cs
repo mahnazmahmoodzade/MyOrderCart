@@ -8,7 +8,7 @@ public class ExternalOrderSender: IExternalOrderSender
 {
 
 	private readonly HttpClient _httpClient;
-	private readonly string _orderEndpoint= "https://myordercart-test.requestcatcher.com";
+	private readonly string _orderEndpoint= "https://myordercart.requestcatcher.com";
 
 	public ExternalOrderSender(HttpClient httpClient)
 	{
@@ -19,15 +19,16 @@ public class ExternalOrderSender: IExternalOrderSender
 	{
 		var payload = new
 		{
-			Items = cart.Items.Select(i => new
+			OrderStatus = "Confirmed",
+			TotalPrice = cart.TotalPrice,
+			Products = cart.Items.Select(i => new
 			{
-				ProductId = i.Product.Id,
-				ProductTitle = i.Product.Title,
-				UnitPrice = i.Product.Price,
-				Quantity = i.Quantity,
-				TotalPrice = i.TotalPrice
+				Id = i.Product.Id,
+				Title = i.Product.Title,
+				Price = i.Product.Price,
+				Quantity  = i.Quantity,
 			}),
-			Total = cart.TotalPrice
+			
 		};
 
 		var json = JsonSerializer.Serialize(payload);
