@@ -6,9 +6,13 @@ public class Cart
 
 	public IReadOnlyCollection<CartItem> Items => _items.AsReadOnly();
 	public decimal TotalPrice => _items.Sum(i => i.TotalPrice);
+	public bool IsConfirmed { get; private set; } = false;
 
 	public void AddProduct(Product product)
 	{
+		if (IsConfirmed)
+			throw new InvalidOperationException("Cannot modify a confirmed cart.");
+
 		if (product == null)
 			throw new ArgumentNullException(nameof(product));
 
@@ -27,8 +31,16 @@ public class Cart
 
 	public void RemoveProduct(int productId)
 	{
+		if (IsConfirmed)
+			throw new InvalidOperationException("Cannot modify a confirmed cart.");
+
 		var item = _items.FirstOrDefault(i => i.Product.Id == productId);
 		if (item != null)
 			_items.Remove(item);
+	}
+
+	public void Confirm()
+	{
+		IsConfirmed = true;
 	}
 }

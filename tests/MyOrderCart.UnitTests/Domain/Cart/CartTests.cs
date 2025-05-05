@@ -128,4 +128,31 @@ public class CartTests
 		Assert.Equal(0.0m, total);
 	}
 
+
+	[Fact]
+	public void AddProduct_Should_Throw_When_Cart_Is_Confirmed()
+	{
+		// Arrange
+		var cart = new MyOrderCart.Domain.Entities.Cart();
+		cart.Confirm(); // lock the cart
+
+		var product = new Product { Id = 1, Title = "Test Product", Price = 10 };
+
+		// Act & Assert
+		Assert.Throws<InvalidOperationException>(() => cart.AddProduct(product));
+	}
+
+	[Fact]
+	public void RemoveProduct_Should_Throw_When_Cart_Is_Confirmed()
+	{
+		// Arrange
+		var cart = new MyOrderCart.Domain.Entities.Cart();
+		var product = new Product { Id = 1, Title = "Test", Price = 10 };
+		cart.AddProduct(product);
+		cart.Confirm(); // lock the cart
+
+		// Act & Assert
+		Assert.Throws<InvalidOperationException>(() => cart.RemoveProduct(product.Id));
+	}
+
 }
