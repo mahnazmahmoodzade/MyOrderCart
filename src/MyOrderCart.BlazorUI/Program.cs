@@ -3,6 +3,7 @@ using MyOrderCart.Application.Services;
 using MyOrderCart.BlazorUI.Components;
 using MyOrderCart.BlazorUI.Services;
 using MyOrderCart.Infrastructure.Services;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,10 @@ builder.Services.AddHttpClient();
 builder.Services.AddSingleton<CartService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 
 var app = builder.Build();
