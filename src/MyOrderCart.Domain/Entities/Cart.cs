@@ -43,4 +43,23 @@ public class Cart
 	{
 		IsConfirmed = true;
 	}
+
+	public void DecrementProduct(int productId)
+	{
+		if(IsConfirmed)
+			throw new InvalidOperationException("Cannot modify a confirmed cart.");
+
+		var item = _items.FirstOrDefault(i => i.Product.Id == productId);
+		
+		if (item == null) return;
+
+		if (item.Quantity > 1)
+		{
+			item.DecrementQuantity();
+		}
+		else
+		{
+			_items.Remove(item);
+		}
+	}
 }

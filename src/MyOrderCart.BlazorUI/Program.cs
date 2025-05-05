@@ -1,5 +1,6 @@
 using MyOrderCart.Application.Interfaces;
 using MyOrderCart.BlazorUI.Components;
+using MyOrderCart.BlazorUI.Services;
 using MyOrderCart.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,10 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient<IExternalOrderSender, ExternalOrderSender>();
+builder.Services.AddScoped<IProductApiService, ProductApiService>();
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<CartService>();
+
 
 var app = builder.Build();
 

@@ -17,4 +17,12 @@ public class CartItem
 		Quantity++;
 	}
 
+	public void DecrementQuantity()
+	{
+		if (Quantity > 1)
+		{
+			Quantity--;
+		}
+	}
+
 }

@@ -1,0 +1,27 @@
+﻿@using MyOrderCart.BlazorUI.Services
+@inject CartService CartService
+@implements IDisposable
+
+<button class="btn btn-outline-primary position-relative">
+    🛒 Cart
+    @if (CartService.Items.Any())
+    {
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            @CartService.Items.Sum(i => i.Quantity)
+        </span>
+    }
+</button>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        CartService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        CartService.OnChange -= StateHasChanged;
+    }
+
+}

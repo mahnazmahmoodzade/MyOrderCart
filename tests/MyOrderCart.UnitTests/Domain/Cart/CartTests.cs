@@ -155,4 +155,38 @@ public class CartTests
 		Assert.Throws<InvalidOperationException>(() => cart.RemoveProduct(product.Id));
 	}
 
+
+	[Fact]
+	public void DecrementProduct_Should_Decrease_Quantity_If_Exists()
+	{
+		// Arrange
+		var cart = new MyOrderCart.Domain.Entities.Cart();
+		var product = new Product { Id = 1, Title = "Test Product", Price = 10 };
+
+		cart.AddProduct(product);
+		cart.AddProduct(product); 
+
+		// Act
+		cart.DecrementProduct(product.Id);
+
+		// Assert
+		var item = cart.Items.FirstOrDefault(i => i.Product.Id == product.Id);
+		Assert.NotNull(item);
+		Assert.Equal(1, item.Quantity);
+	}
+
+	[Fact]
+	public void DecrementProduct_Should_Remove_Item_When_Quantity_Reaches_Zero()
+	{
+		// Arrange
+		var cart = new MyOrderCart.Domain.Entities.Cart();
+		var product = new Product { Id = 1, Title = "Test Product", Price = 10 };
+		cart.AddProduct(product); 
+
+		// Act
+		cart.DecrementProduct(product.Id);
+
+		// Assert
+		Assert.DoesNotContain(cart.Items, i => i.Product.Id == product.Id);
+	}
 }
