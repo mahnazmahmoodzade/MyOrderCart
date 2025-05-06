@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
+using Microsoft.Extensions.Options;
 using MyOrderCart.Application.Interfaces;
+using MyOrderCart.Application.Options;
 using MyOrderCart.Domain.Entities;
 
 namespace MyOrderCart.Infrastructure.Services;
@@ -8,11 +10,12 @@ public class ExternalOrderSender: IExternalOrderSender
 {
 
 	private readonly HttpClient _httpClient;
-	private readonly string _orderEndpoint= "https://myordercart.requestcatcher.com";
+	private readonly string _endpoint;
 
-	public ExternalOrderSender(HttpClient httpClient)
+	public ExternalOrderSender(HttpClient httpClient,IOptions<OrderOptions> options)
 	{
 		_httpClient = httpClient;
+		_endpoint = options.Value.Endpoint;	
 	}
 
 	public async Task<bool> SendOrderAsync(Cart cart, CancellationToken cancellationToken = default)
@@ -36,7 +39,7 @@ public class ExternalOrderSender: IExternalOrderSender
 
 		try
 		{
-			var response = await _httpClient.PostAsync(_orderEndpoint, content, cancellationToken);
+			var response = await _httpClient.PostAsync(_endpoint, content, cancellationToken);
 			return response.IsSuccessStatusCode;
 		}
 

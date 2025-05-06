@@ -1,7 +1,9 @@
 using MyOrderCart.Application.Interfaces;
+using MyOrderCart.Application.Options;
 using MyOrderCart.Application.Services;
 using MyOrderCart.BlazorUI.Components;
 using MyOrderCart.BlazorUI.Services;
+using MyOrderCart.Infrastructure.Repositories;
 using MyOrderCart.Infrastructure.Services;
 using System.Globalization;
 
@@ -16,7 +18,14 @@ builder.Services.AddScoped<IProductApiService, ProductApiService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<CartService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.Configure<OrderOptions>(
+	builder.Configuration.GetSection(OrderOptions.SectionName));
+builder.Services.Configure<ProductApiOptions>(
+	builder.Configuration.GetSection(ProductApiOptions.SectionName));
+
+
 
 var cultureInfo = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;

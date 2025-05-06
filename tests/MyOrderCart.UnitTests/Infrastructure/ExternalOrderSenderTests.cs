@@ -2,6 +2,8 @@
 using Moq;
 using MyOrderCart.Domain.Entities;
 using System.Net;
+using Microsoft.Extensions.Options;
+using MyOrderCart.Application.Options;
 using MyOrderCart.Infrastructure.Services;
 
 namespace MyOrderCart.UnitTests.Infrastructure;
@@ -25,8 +27,13 @@ public class ExternalOrderSenderTests
 			});
 
 		var httpClient = new HttpClient(handlerMock.Object);
+		var mockOptions = new Mock<IOptions<OrderOptions>>();
+		mockOptions.Setup(o => o.Value).Returns(new OrderOptions
+		{
+			Endpoint = "https://myordercart.requestcatcher.com/"
+		});
 
-		var sender = new ExternalOrderSender(httpClient);
+		var sender = new ExternalOrderSender(httpClient, mockOptions.Object);
 
 		var cart = new Cart();
 		cart.AddProduct(new Product { Id = 1, Title = "Test product", Price = 10 });
@@ -57,7 +64,13 @@ public class ExternalOrderSenderTests
 
 		var httpClient = new HttpClient(handlerMock.Object);
 
-		var sender = new ExternalOrderSender(httpClient);
+		var mockOptions = new Mock<IOptions<OrderOptions>>();
+		mockOptions.Setup(o => o.Value).Returns(new OrderOptions
+		{
+			Endpoint = "https://myordercart.requestcatcher.com/"
+		});
+
+		var sender = new ExternalOrderSender(httpClient, mockOptions.Object);
 
 		var cart = new Cart();
 		cart.AddProduct(new Product { Id = 1, Title = "Test Product", Price = 10 });
@@ -85,7 +98,13 @@ public class ExternalOrderSenderTests
 
 		var httpClient = new HttpClient(handlerMock.Object);
 
-		var sender = new ExternalOrderSender(httpClient);
+		var mockOptions = new Mock<IOptions<OrderOptions>>();
+		mockOptions.Setup(o => o.Value).Returns(new OrderOptions
+		{
+			Endpoint = "https://myordercart.requestcatcher.com/"
+		});
+
+		var sender = new ExternalOrderSender(httpClient, mockOptions.Object);
 
 		var cart = new Cart();
 		cart.AddProduct(new Product { Id = 1, Title = "Test", Price = 10 });
@@ -96,5 +115,4 @@ public class ExternalOrderSenderTests
 		// Assert
 		Assert.False(result);
 	}
-
 }
