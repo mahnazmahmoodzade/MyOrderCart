@@ -3,9 +3,11 @@ using MyOrderCart.Application.Options;
 using MyOrderCart.Application.Services;
 using MyOrderCart.BlazorUI.Components;
 using MyOrderCart.BlazorUI.Services;
+using MyOrderCart.Infrastructure.Persistence;
 using MyOrderCart.Infrastructure.Repositories;
 using MyOrderCart.Infrastructure.Services;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +26,8 @@ builder.Services.Configure<OrderOptions>(
 	builder.Configuration.GetSection(OrderOptions.SectionName));
 builder.Services.Configure<ProductApiOptions>(
 	builder.Configuration.GetSection(ProductApiOptions.SectionName));
-
+builder.Services.AddDbContext<OrderDbContext>(options =>
+	options.UseInMemoryDatabase("OrderDb"));
 
 
 var cultureInfo = new CultureInfo("en-US");
