@@ -20,8 +20,10 @@ public class OrderServiceTests
 		mockSender
 			.Setup(s => s.SendOrderAsync(It.IsAny<Cart>(), It.IsAny<CancellationToken>()))
 			.ReturnsAsync(true);
+		
+		var repository = new Mock<IOrderRepository>().Object;
 
-		var service= new OrderService(mockSender.Object);
+		var service= new OrderService(mockSender.Object,repository);
 
 		//act
 		await service.ConfirmOrderAsync(cart, CancellationToken.None);
@@ -39,7 +41,8 @@ public class OrderServiceTests
 		cart.Confirm(); 
 
 		var mockSender = new Mock<IExternalOrderSender>();
-		var service = new OrderService(mockSender.Object);
+		var repository = new Mock<IOrderRepository>().Object;
+		var service = new OrderService(mockSender.Object, repository);
 
 		// Act & Assert
 		await Assert.ThrowsAsync<InvalidOperationException>(() =>
@@ -57,9 +60,10 @@ public class OrderServiceTests
 		var mockSender = new Mock<IExternalOrderSender>();
 		mockSender
 			.Setup(s => s.SendOrderAsync(It.IsAny<Cart>(), It.IsAny<CancellationToken>()))
-			.ReturnsAsync(false); 
+			.ReturnsAsync(false);
 
-		var service = new OrderService(mockSender.Object);
+		var repository = new Mock<IOrderRepository>().Object;
+		var service = new OrderService(mockSender.Object, repository);
 
 		// Act & Assert
 		await Assert.ThrowsAsync<Exception>(() =>
