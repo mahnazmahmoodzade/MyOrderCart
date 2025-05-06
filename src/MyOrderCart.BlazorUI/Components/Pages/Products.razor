@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Products</PageTitle>
 
 @using MyOrderCart.BlazorUI.Models
 @using MyOrderCart.BlazorUI.Services
@@ -22,6 +22,11 @@ else if (!products.Any())
 }
 else
 {
+    <input type="text"
+           class="form-control"
+           placeholder="Search by title..."
+           @bind="searchTerm"
+           @bind:event="oninput" />
     <table class="table">
         <thead>
             <tr>
@@ -31,7 +36,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in products)
+            @foreach (var product in FilteredProducts)
             {
                 <tr>
                     <td>@product.Title</td>
@@ -79,7 +84,16 @@ else
 
 @code {
     private List<ProductDto>? products;
-
+    private string searchTerm = string.Empty;
+    private string SearchTerm
+    {
+        get => searchTerm;
+        set
+        {
+            searchTerm = value;
+            StateHasChanged();
+        }
+    }
     protected override async Task OnInitializedAsync()
     {
         products = await ProductApiService.GetProductsAsync();
@@ -106,4 +120,11 @@ else
     {
         CartService.DecrementProduct(productId);
     }
+
+  
+
+    private IEnumerable<ProductDto>? FilteredProducts =>
+        string.IsNullOrWhiteSpace(searchTerm)
+            ? products
+            : products.Where(p => p.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
 }
