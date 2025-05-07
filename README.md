@@ -61,3 +61,34 @@ Orders are sent to an external system using an HTTP API. The endpoint is configu
 
 ```bash
 dotnet run --project src/MyOrderCart.BlazorUI
+```
+2. Or run with Docker:
+```bash
+docker build -t myordercart .
+docker run -p 8080:80 myordercart
+```
+
+---
+
+## 🧪 Running Tests
+```bash
+dotnet test
+```
+
+---
+
+## 📂 Folder Structure
+
+src/
+  MyOrderCart.Domain
+  MyOrderCart.Application
+  MyOrderCart.Infrastructure
+  MyOrderCart.BlazorUI
+tests/
+  MyOrderCart.UnitTests
+  MyOrderCart.BlazorUI.Tests
+
+---
+
+## 👨‍💻 Author
+Built by Mahnaz Mahmoodzadeh as part of a technical assessment.
