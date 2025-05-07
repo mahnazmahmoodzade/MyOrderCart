@@ -1,68 +1,72 @@
-# 🛒 MyOrderCart
+## 🛒 MyOrderCart
 
 A Blazor Server application for browsing products, managing a shopping cart, and confirming orders via an external API.
 
 ---
 
-## 📐 Architecture
+### 📐 Architecture
 
-This project follows a **Clean Architecture** approach with the following layers:
+This project follows the **Clean Architecture** pattern with clearly separated layers:
 
-- **Domain**: Core business models (e.g., `Cart`, `CartItem`, `Product`)
-- **Application**: Service interfaces and logic (`OrderService`, `IExternalOrderSender`)
-- **Infrastructure**: EF Core persistence (`EfOrderRepository`), HTTP communication
-- **Blazor UI**: Presentation layer using Blazor Server
+- **Domain**: Core business models (`Cart`, `CartItem`, `Product`)
+- **Application**: Interfaces and business logic (`OrderService`, `IExternalOrderSender`)
+- **Infrastructure**: EF Core persistence and HTTP communication
+- **Blazor UI**: Presentation layer built with Blazor Server
 
 ---
 
-## 🧰 Technologies Used
+### 🧰 Technologies Used
 
 - **.NET 8** (Blazor Server)
-- **Entity Framework Core** (In-Memory database for order storage)
-- **IOptions pattern** for configuration (API endpoints)
-- **xUnit + bUnit** for unit and component testing
+- **Entity Framework Core** (in-memory database)
+- **IOptions** pattern for configuration
+- **xUnit** & **bUnit** for testing
+- **Moq** for mocking dependencies in unit tests
 - **Docker** for Linux-based containerization
-- **Moq** for mocking interfaces in unit tests
 
 ---
 
-## 🔌 External Integration
+### 🔌 External Integration
 
-Orders are sent to an external system using an HTTP API. The endpoint is configurable via `appsettings.json` and injected using `IOptions<OrderOptions>`.
-
----
-
-## ✅ Features Implemented
-
-- Browse product list (loaded from `fakestoreapi.com`)
-- Add/remove/increment/decrement items in cart
-- Live cart count via shared `CartService`
-- Confirm order → freeze cart → send to external API
-- Persist confirmed orders with EF Core (in-memory)
-- Configurable API endpoints (Order + Product)
-- Unit tests for domain and application logic
-- UI component tests using bUnit
-- Dockerized build and run support
+Orders are submitted to an external system via HTTP.  
+The endpoint is configurable through `appsettings.json` using the `IOptions<OrderOptions>` pattern.
 
 ---
 
-## 🚧 Not Yet Implemented (Planned)
+### ✅ Features Implemented
 
-- Advanced styling (e.g., using MudBlazor)
-- End-to-end UI testing with Selenium
-- Richer error handling and logging
+- Browse products from [`fakestoreapi.com`](https://fakestoreapi.com)
+- Add, remove, increment, and decrement items in the cart
+- Live cart updates using a shared `CartService`
+- Confirm orders (cart becomes read-only)
+- Send confirmed orders to an external API
+- Store confirmed orders in an in-memory database (EF Core)
+- Configurable product and order endpoints
+- Unit tests for business logic
+- UI component tests using BUnit
+- Docker support
 
 ---
 
-## ▶️ Running the App
+### 🚧 Future Improvements
 
-1. Clone the repo
-2. Run from Visual Studio or with:
+- Enhanced styling with MudBlazor
+- End-to-end UI tests (e.g., with Selenium)
+- Improved error handling and logging
+
+---
+
+### ▶️ Running the App
+
+1. Clone the repository
+2. Run with Visual Studio **or** from CLI:
 
 ```bash
 dotnet run --project src/MyOrderCart.BlazorUI
 ```
-2. Or run with Docker:
+
+3. Or run with Docker:
+
 ```bash
 docker build -t myordercart .
 docker run -p 8080:80 myordercart
@@ -71,24 +75,29 @@ docker run -p 8080:80 myordercart
 ---
 
 ## 🧪 Running Tests
+
 ```bash
 dotnet test
 ```
 
 ---
 
-## 📂 Folder Structure
+### 📂 Folder Structure
 
+```
 src/
-  MyOrderCart.Domain
-  MyOrderCart.Application
-  MyOrderCart.Infrastructure
-  MyOrderCart.BlazorUI
+  MyOrderCart.Domain/
+  MyOrderCart.Application/
+  MyOrderCart.Infrastructure/
+  MyOrderCart.BlazorUI/
+
 tests/
-  MyOrderCart.UnitTests
-  MyOrderCart.BlazorUI.Tests
+  MyOrderCart.UnitTests/
+  MyOrderCart.BlazorUI.Tests/
+```
 
 ---
 
-## 👨‍💻 Author
-Built by Mahnaz Mahmoodzadeh as part of a technical assessment.
+### 👤 Author
+
+Built by **Mahnaz Mahmoodzadeh** as part of a technical assessment.
