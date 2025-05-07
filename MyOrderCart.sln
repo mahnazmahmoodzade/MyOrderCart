@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A623026F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyOrderCart.UnitTests", "tests\MyOrderCart.UnitTests\MyOrderCart.UnitTests.csproj", "{C4619809-B962-443B-AB4C-3555257774F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyOrderCart.BlazorUI.Tests", "tests\MyOrderCart.BlazorUI.Tests\MyOrderCart.BlazorUI.Tests.csproj", "{DD6429CB-D50B-4CF0-85BA-00F39CAA10E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{C4619809-B962-443B-AB4C-3555257774F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4619809-B962-443B-AB4C-3555257774F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4619809-B962-443B-AB4C-3555257774F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6429CB-D50B-4CF0-85BA-00F39CAA10E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6429CB-D50B-4CF0-85BA-00F39CAA10E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6429CB-D50B-4CF0-85BA-00F39CAA10E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6429CB-D50B-4CF0-85BA-00F39CAA10E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +58,6 @@ Global
 		{8DECC148-9167-44E6-B526-72E938632631} = {1FB76FBF-F5CC-478A-873F-78F33ED40DD1}
 		{C88E6EB5-411A-4046-B870-AB411FA70723} = {1FB76FBF-F5CC-478A-873F-78F33ED40DD1}
 		{C4619809-B962-443B-AB4C-3555257774F9} = {A623026F-C139-47F7-8BF5-50B65E62520E}
+		{DD6429CB-D50B-4CF0-85BA-00F39CAA10E5} = {A623026F-C139-47F7-8BF5-50B65E62520E}
 	EndGlobalSection
 EndGlobal
