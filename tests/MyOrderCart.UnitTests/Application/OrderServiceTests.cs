@@ -8,7 +8,7 @@ namespace MyOrderCart.UnitTests.Application;
 public class OrderServiceTests
 {
 	[Fact]
-	public async Task ConfirmOrder_Should_LockCart_After_Successful_Post()
+	public async Task Confirm_Order_Should_Lock_Cart_After_Successful_Post()
 	{
 		//arrange
 		var cart = new Cart();
@@ -34,7 +34,7 @@ public class OrderServiceTests
 	}
 
 	[Fact]
-	public async Task ConfirmOrder_Should_Throw_When_Cart_Already_Confirmed()
+	public async Task Confirm_Order_Should_Throw_When_Cart_Already_Confirmed()
 	{
 		// Arrange
 		var cart = new Cart();

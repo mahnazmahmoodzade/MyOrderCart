@@ -30,7 +30,7 @@ public class OrderService : IOrderService
 		await _orderRepository.SaveOrderAsync(order, cancellationToken);
 	}
 
-	private static Order CreateOrder(Cart cart)
+	private Order CreateOrder(Cart cart)
 	{
 		return new Order
 		{

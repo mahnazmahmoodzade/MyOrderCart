@@ -57,7 +57,6 @@ public class CartTests
 		Assert.Equal(17.5m, totalPrice);
 	}
 
-	//write a test for removing product from cart when it's deleted	
 	[Fact]
 	public void Remove_Product_Should_Remove_CartItem()
 	{
@@ -130,7 +129,7 @@ public class CartTests
 
 
 	[Fact]
-	public void AddProduct_Should_Throw_When_Cart_Is_Confirmed()
+	public void Add_Product_Should_Throw_When_Cart_Is_Confirmed()
 	{
 		// Arrange
 		var cart = new MyOrderCart.Domain.Entities.Cart();
@@ -143,7 +142,7 @@ public class CartTests
 	}
 
 	[Fact]
-	public void RemoveProduct_Should_Throw_When_Cart_Is_Confirmed()
+	public void Remove_Product_Should_Throw_When_Cart_Is_Confirmed()
 	{
 		// Arrange
 		var cart = new MyOrderCart.Domain.Entities.Cart();
@@ -157,7 +156,7 @@ public class CartTests
 
 
 	[Fact]
-	public void DecrementProduct_Should_Decrease_Quantity_If_Exists()
+	public void Decrement_Product_Should_Decrease_Quantity_If_Exists()
 	{
 		// Arrange
 		var cart = new MyOrderCart.Domain.Entities.Cart();
@@ -176,7 +175,7 @@ public class CartTests
 	}
 
 	[Fact]
-	public void DecrementProduct_Should_Remove_Item_When_Quantity_Reaches_Zero()
+	public void Decrement_Product_Should_Remove_Item_When_Quantity_Reaches_Zero()
 	{
 		// Arrange
 		var cart = new MyOrderCart.Domain.Entities.Cart();

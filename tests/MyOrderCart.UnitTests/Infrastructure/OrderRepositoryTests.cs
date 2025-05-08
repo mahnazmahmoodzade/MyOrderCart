@@ -15,34 +15,36 @@ public class OrderRepositoryTests
 	public async Task ConfirmOrder_Should_Save_Order_To_Database()
 	{
 		// Arrange
-		var cart =new Cart();
-		var product= new Product { Id = 1, Title = "Test Product", Price = 10 };
+		var cart = new Cart();
+		var product = new Product { Id = 1, Title = "Test", Price = 10 };
 		cart.AddProduct(product);
 		cart.AddProduct(product);
 
-		// In-memory Ef Core context setup
-		var options = new DbContextOptionsBuilder<OrderDbContext>()
-			.UseInMemoryDatabase(databaseName: "OrderDb")
-			.Options;
-
-		await using var context = new OrderDbContext(options);
-
-		var repository = new OrderRepository(context);
-		var sender =new Mock<IExternalOrderSender>();
-		sender.Setup(s => s.SendOrderAsync(It.IsAny<Cart>(), It.IsAny<CancellationToken>()))
+		var senderMock = new Mock<IExternalOrderSender>();
+		senderMock
+			.Setup(s => s.SendOrderAsync(cart, It.IsAny<CancellationToken>()))
 			.ReturnsAsync(true);
-		var orderService =new OrderService(sender.Object, repository);
+
+		var repoMock = new Mock<IOrderRepository>();
+		repoMock
+			.Setup(r => r.SaveOrderAsync(It.IsAny<Order>(), It.IsAny<CancellationToken>()))
+			.Returns(Task.CompletedTask);
+
+		var service = new OrderService(senderMock.Object, repoMock.Object);
 
 		// Act
-		await orderService.ConfirmOrderAsync(cart, CancellationToken.None);
+		await service.ConfirmOrderAsync(cart);
 
 		// Assert
-		var savedOrder= await context.Orders
-			.Include(o => o.Items)
-			.FirstOrDefaultAsync();
-		Assert.NotNull(savedOrder);
-		Assert.Equal(1, savedOrder.Items.Count);
-		Assert.Equal(2, savedOrder.Items.First().Quantity);
-		Assert.Equal(20, savedOrder.TotalPrice);
+		senderMock.Verify(s => s.SendOrderAsync(cart, It.IsAny<CancellationToken>()), Times.Once);
+		repoMock.Verify(r => r.SaveOrderAsync(
+				It.Is<Order>(o =>
+					o.TotalPrice == 20 &&
+					o.Items.Count == 1 &&
+					o.Items.Single().Quantity == 2
+				),
+				It.IsAny<CancellationToken>()),
+			Times.Once);
+
 	}
 }
