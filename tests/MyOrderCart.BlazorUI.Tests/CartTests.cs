@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using MyOrderCart.Application.Interfaces;
 using MyOrderCart.BlazorUI.Components.Pages;
-using MyOrderCart.BlazorUI.Models;
 using MyOrderCart.BlazorUI.Services;
 using MyOrderCart.Domain.Entities;
 using Cart = MyOrderCart.Domain.Entities.Cart;

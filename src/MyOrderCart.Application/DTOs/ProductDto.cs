@@ -1,4 +1,4 @@
-﻿namespace MyOrderCart.BlazorUI.Models;
+﻿namespace MyOrderCart.Application.DTOs;
 
 public class ProductDto
 {

@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Net.Http.Json;
+using Microsoft.Extensions.Options;
+using MyOrderCart.Application.DTOs;
+using MyOrderCart.Application.Interfaces;
 using MyOrderCart.Application.Options;
-using MyOrderCart.BlazorUI.Models;
 
-namespace MyOrderCart.BlazorUI.Services;
+namespace MyOrderCart.Infrastructure.Services;
 
-public class ProductApiService : IProductApiService
+public class ProductApiService : IProductService
 {
 	private readonly HttpClient _httpClient;
 	private readonly string _endpoint;

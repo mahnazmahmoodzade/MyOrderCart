@@ -16,7 +16,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient<IExternalOrderSender, ExternalOrderSender>();
-builder.Services.AddScoped<IProductApiService, ProductApiService>();
+builder.Services.AddScoped<IProductService, ProductApiService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<CartService>();
 builder.Services.AddScoped<OrderService>();

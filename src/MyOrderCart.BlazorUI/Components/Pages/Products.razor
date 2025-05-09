@@ -1,11 +1,11 @@
 ﻿@page "/"
 
 <PageTitle>Products</PageTitle>
-
-@using MyOrderCart.BlazorUI.Models
 @using MyOrderCart.BlazorUI.Services
 @using MyOrderCart.Domain.Entities
-@inject IProductApiService ProductApiService
+@using MyOrderCart.Application.Interfaces
+@using MyOrderCart.Application.DTOs
+@inject IProductService ProductApiService
 @inject CartService CartService
 
 <h3>Product List</h3>

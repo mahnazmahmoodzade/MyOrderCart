@@ -2,8 +2,9 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using MyOrderCart.Application.DTOs;
+using MyOrderCart.Application.Interfaces;
 using MyOrderCart.BlazorUI.Components.Pages;
-using MyOrderCart.BlazorUI.Models;
 using MyOrderCart.BlazorUI.Services;
 using MyOrderCart.Domain.Entities;
 
@@ -15,7 +16,7 @@ public class ProductsTests : TestContext
 	public void Add_To_Cart_Button_Click_Calls_Cart_Service()
 	{
 		// Arrange
-		var mockApiService = new Mock<IProductApiService>();
+		var mockApiService = new Mock<IProductService>();
 		mockApiService.Setup(service => service.GetProductsAsync())
 			.ReturnsAsync(new List<ProductDto>
 			{
@@ -43,7 +44,7 @@ public class ProductsTests : TestContext
 	public void Product_Search_Filters_List()
 	{
 		// Arrange
-		var mockApiService = new Mock<IProductApiService>();
+		var mockApiService = new Mock<IProductService>();
 		mockApiService.Setup(s => s.GetProductsAsync()).ReturnsAsync(new List<ProductDto>
 		{
 			new ProductDto { Id = 1, Title = "Product 1", Price = 10 },
@@ -68,7 +69,7 @@ public class ProductsTests : TestContext
 	public void Product_Component_Shows_No_Table_When_No_Products()
 	{
 		//Arrange
-		var mockApiService = new Mock<IProductApiService>();
+		var mockApiService = new Mock<IProductService>();
 		mockApiService.Setup(s => s.GetProductsAsync()).ReturnsAsync(new List<ProductDto>());
 		Services.AddSingleton(mockApiService.Object);
 		Services.AddSingleton(new CartService());
